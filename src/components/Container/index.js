@@ -1,16 +1,30 @@
+//Third Party
 import React, { Component } from 'react';
+import { Provider } from 'react-redux'
+import { ConnectedRouter, routerReducer, routerMiddleware, push } from 'react-router-redux'
+import { Route } from 'react-router'
+
+//Styles
 import './Style.css'
 
-import UserMenuItem from '../UserMenuItem'
-import SearchMenuItem from '../SearchMenuItem'
+//Store to routify content of Container
+import { store, history } from '../../redux/Store'
+
+//Components
+import Home from '../Home'
+import UserSearch from '../User/Search'
 
 class Container extends Component {
   render() {
     return (
-      <div className="container">
-        <UserMenuItem name="fa fa-user"/>
-        <UserMenuItem name="fa fa-id-card-o"/>
-      </div>
+      <Provider store={store}>
+        <ConnectedRouter history={history}>
+          <div>
+            <Route exact path="/" component={Home}/>
+            <Route exact path="/user" component={UserSearch}/>
+          </div>
+        </ConnectedRouter>
+      </Provider>
     );
   }
 }

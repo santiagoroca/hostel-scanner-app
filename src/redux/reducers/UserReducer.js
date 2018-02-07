@@ -1,15 +1,17 @@
-//Third Party
-import update from 'react-addons-update'
+//Constants
+import { USER_ADD } from '../actions/User/Add'
 
 const actions = {
 
-    [`${MODAL_READONLY}`]: (state, action) => {
+    [`${USER_ADD}`]: (state, action) => {
         return Object.assign({}, state, action);
     }
 
 }
 
-const initialState = {};
+const initialState = {
+  users: []
+};
 
 export default (state = initialState, action) => {
     const _action = actions[action.type];

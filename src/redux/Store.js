@@ -2,22 +2,32 @@
 import { createStore, applyMiddleware } from 'redux'
 import createSagaMiddleware from 'redux-saga'
 
-//Reducers
-import CombinedReducers from './reducers'
+//Router
+import createHistory from 'history/createBrowserHistory'
+import { Route } from 'react-router'
+import { ConnectedRouter, routerReducer, routerMiddleware, push } from 'react-router-redux'
 
-//Sagas
-import { FetchTODOSaga } from './sagas/FetchTODOSaga'
+//Reducers
+import { combineReducers } from 'redux'
+import CombinedReducers from './reducers'
 
 //Create instance of saga middleware
 const sagaMiddleware = createSagaMiddleware();
 
+//Create navigation createHistory
+const history = createHistory()
+
+// Build the middleware for intercepting and dispatching navigation actions
+const middleware = routerMiddleware(history)
+
 //Create Store
 const store = createStore(
-    CombinedReducers,
-    applyMiddleware(sagaMiddleware)
+    combineReducers({
+      ...CombinedReducers,
+      router: routerMiddleware
+    }),
+    applyMiddleware(sagaMiddleware),
+    applyMiddleware(middleware)
 );
 
-//Apply sagas to store
-sagaMiddleware.run(FetchTODOSaga);
-
-export default store
+export { history, store }

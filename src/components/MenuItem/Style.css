@@ -1,0 +1,13 @@
+.menu-item-container {
+    display: block;
+}
+
+.menu-item-container:hover {
+    background: grey;
+}
+
+.menu-item-container:after {
+    content: "";
+    display: block;
+    padding-bottom: 100%;
+}
